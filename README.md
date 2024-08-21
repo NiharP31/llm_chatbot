@@ -1,20 +1,22 @@
-## LLM chatbot using Openai-api
+## Gemini-AI chatbot
 
 ### Project Overview
 
-This project is a web application built using Flask that integrates with the OpenAI API to provide content generation and text summarization services. Users can input a prompt to generate content or provide text to receive a summary. The application leverages environment variables for secure API key management.
+This project is a web application built using Flask that integrates with Google's Gemini AI API to provide content generation and text summarization services. Users can input prompts to generate content or provide text to receive a summary. The application uses environment variables for secure API key management and maintains conversation history.
 
 ### Features
 
-- **Content Generation**: Users can generate text content based on a given prompt using OpenAI's GPT-3.5-turbo model.
+- **Content Generation**: Users can generate text content based on a given prompt using Google's Gemini Pro model.
 - **Text Summarization**: Users can summarize large blocks of text efficiently.
+- **Conversation History**: The application maintains context for each user's conversation.
+- **Feedback System**: Users can provide feedback on generated responses.
 - **Web Interface**: A simple HTML interface to interact with the application.
 
 ### Prerequisites
 
 - Python 3.x
 - Flask
-- OpenAI Python Client
+- google-generativeai
 - python-dotenv
 
 ### Installation
@@ -37,7 +39,7 @@ This project is a web application built using Flask that integrates with the Ope
    - Create a `.env` file in the root directory.
    - Add your OpenAI API key:
      ```
-     OPENAI_API_KEY=your_openai_api_key
+     GOOGLE_API_KEY=your_google_api_key
      ```
      
 ### Usage
@@ -54,6 +56,13 @@ This project is a web application built using Flask that integrates with the Ope
 
 ### Code Structure
 
-- **`app.py`**: Main application file containing the Flask routes and logic for content generation and summarization.
+- **`app.py`**: Main application file containing the Flask routes and logic for content generation, summarization, and feedback handling.
 - **`templates/index.html`**: HTML template for the web interface.
 - **`.env`**: File to store environment variables securely.
+- **`env.yml`**: Conda environment configuration file.
+
+### API Endpoints
+
+- **`/generate`**: POST request for content generation
+- **`/summarize`**: POST request for text summarization
+- **`/feedback`**: POST request for submitting user feedback
