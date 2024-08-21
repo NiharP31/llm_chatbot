@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-import openai
+import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 
@@ -8,8 +8,9 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Get the OpenAI API key from environment variables
-openai.api_key = os.getenv('OPENAI_API_KEY')
+# Configure the Gemini API
+# genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
+genai.configure(api_key='AIzaSyDv7Ee-FqnhisBH19Rk2C9f8ByLUpFLzvA')
 
 @app.route('/')
 def home():
@@ -30,26 +31,14 @@ def summarize():
     return jsonify({'summary': summary})
 
 def generate_content(prompt, max_tokens=150):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=max_tokens
-    )
-    return response['choices'][0]['message']['content'].strip()
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(prompt)
+    return response.text[:max_tokens]
 
 def summarize_text(text):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"Summarize the following text:\n{text}"}
-        ],
-        max_tokens=100
-    )
-    return response['choices'][0]['message']['content'].strip()
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(f"Summarize the following text:\n{text}")
+    return response.text[:100]
 
 if __name__ == '__main__':
     app.run(debug=True)
