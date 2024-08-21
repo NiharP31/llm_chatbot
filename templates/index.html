@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Generation and Summarization Tool</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+        button { padding: 10px 20px; }
+        .output { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Content Generation and Summarization Tool</h1>
+
+    <h2>Generate Content</h2>
+    <textarea id="generate-input" placeholder="Enter prompt for content generation..."></textarea>
+    <button onclick="generateContent()">Generate</button>
+    <div class="output" id="generate-output"></div>
+
+    <h2>Summarize Text</h2>
+    <textarea id="summarize-input" placeholder="Enter text to summarize..."></textarea>
+    <button onclick="summarizeText()">Summarize</button>
+    <div class="output" id="summarize-output"></div>
+
+    <script>
+        async function generateContent() {
+            const prompt = document.getElementById('generate-input').value;
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: prompt })
+            });
+            const data = await response.json();
+            document.getElementById('generate-output').innerText = data.content;
+        }
+
+        async function summarizeText() {
+            const text = document.getElementById('summarize-input').value;
+            const response = await fetch('/summarize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text })
+            });
+            const data = await response.json();
+            document.getElementById('summarize-output').innerText = data.summary;
+        }
+    </script>
+</body>
+</html>
