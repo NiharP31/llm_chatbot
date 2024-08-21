@@ -1,4 +1,4 @@
-## README for Flask Content Generation and Summarization Tool
+## LLM chatbot using Openai-api
 
 ### Project Overview
 
@@ -45,7 +45,7 @@ This project is a web application built using Flask that integrates with the Ope
 1. **Run the Application**:
    ```bash
    flask run
-
+   ```
    The application will start on 'http://127.0.0.1:5000/'.
 
 2. **Access the Web Interface**:
